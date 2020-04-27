@@ -1,0 +1,77 @@
+<template>
+  <div class="page" id="home" data-name="home">
+    <!-- Top Navbar -->
+    
+    <!-- Scrollable page content-->
+    <div class="page-content">
+      
+        <div data-pagination='{"el": ".swiper-pagination"}' data-space-between="10" data-slides-per-view="1.2" data-centered-slides="true" class="swiper-container swiper-init demo-swiper demo-swiper-auto">
+          <div class="swiper-wrapper">
+            {{#each campanas}}
+            <div class="swiper-slide">
+              <div class="card card-expandable">
+                <div class="card-content">
+                  <div class="card-small" style="background-image: url('http://localhost{{Cover.url}}');">
+                    <div class="card-header text-color-white display-block">
+                      
+                    </div>
+                    <a href="#" class="link card-close card-opened-fade-in color-white" style="position: absolute; right: 15px; top: 15px">
+                      <!-- <i class="icon f7-icons"></i> -->
+                      <i class="f7-icons">multiply_circle_fill</i>
+                    </a>
+                  </div>
+                  <div class="card-content-padding">
+                    <p class="block-title">{{Nombre}}</p>
+                    <div class="block">
+                      <div class="row">
+                        <div class="col">
+                          <p>{{Descripcion}}</p>
+                    <p>{{Descripcion}}</p>
+                    <p>{{Descripcion}}</p>
+                    <p>{{Descripcion}}</p>
+                    <p>{{Descripcion}}</p>
+                    <p>{{Descripcion}}</p>
+                    <p>{{Descripcion}}</p>
+                    <p>{{Descripcion}}</p>
+                    <p>{{Descripcion}}</p>
+                        </div>
+                      </div>
+                    </div>
+                    ...
+                  </div>
+                </div>
+                <div class="card-btns card-prevent-open">
+                  <div class="row no-gap">
+                    <div class="col-10"></div>
+                    <div class="col-80">
+                      <p>{{Nombre}}</p>
+                    </div>
+                    <div class="col-10"></div>
+                  </div>
+                  <div class="row no-gap">
+                    <div class="col-20"></div>
+                    <div class="col-60">
+                      <a class="button button-raised button-round button-fill button-large link" data-force="true" data-ignore-cache="true" data-view=".view-main" href="/campana/{{id}}">Donar</a>
+  
+                    </div>
+                    
+                    <div class="col-20"></div>
+                  </div>
+                </div>
+              </div>
+
+
+
+             
+            </div>
+            {{/each}}
+            
+          </div>
+        </div>
+      
+    </div>
+  </div>
+</template>
+<script>
+export default {}
+</script>

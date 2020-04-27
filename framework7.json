@@ -1,0 +1,27 @@
+{
+  "cwd": "/Users/gamanox-wtf/wtf/amigos-sierra-app/",
+  "type": [
+    "pwa",
+    "web"
+  ],
+  "name": "amigos-sierra",
+  "framework": "core",
+  "template": "single-view",
+  "bundler": "webpack",
+  "cssPreProcessor": "stylus",
+  "theming": {
+    "customColor": true,
+    "color": "#ff9600",
+    "darkTheme": false,
+    "iconFonts": true,
+    "fillBars": false
+  },
+  "customBuild": false,
+  "webpack": {
+    "developmentSourceMap": true,
+    "productionSourceMap": true,
+    "hashAssets": false,
+    "preserveAssetsPaths": false,
+    "inlineAssets": true
+  }
+}

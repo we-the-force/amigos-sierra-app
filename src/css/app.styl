@@ -1,0 +1,52 @@
+/* Custom color theme properties */
+:root {
+  --f7-theme-color: #ff9600;
+  --f7-theme-color-rgb: 255, 150, 0;
+  --f7-theme-color-shade: #d67e00;
+  --f7-theme-color-tint: #ffa729;
+}
+
+/* Your app custom styles here */
+
+#home
+  .swiper-pagination
+    z-index 1
+  .swiper-container
+    height 100%
+    z-index 300
+
+  .card
+    height 80vh
+    .block-title
+      font-size 20px
+      font-weight bold
+    .card-btns
+      width 100%
+      position absolute
+      bottom 0
+      background-color #fff
+      padding-bottom 3vh
+      p
+        text-align center
+    .card-content-padding
+      padding-bottom 120px
+    .card-content
+      .card-small
+        height 80vh
+        background-size cover
+        background-repeat no-repeat
+        background-position: 50% 50%
+    
+    &.card-opened,&.card-opening
+      .card-btns
+        p
+          display none
+      .card-content
+        .card-small
+          height 30vh
+          background-size cover
+          background-repeat no-repeat
+          background-position: 50% 50%
+
+
+@import "_campana"

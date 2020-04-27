@@ -1,0 +1,42 @@
+<template>
+<div class="page" data-name="campana" id="campana">
+  <div class="navbar">
+    <div class="navbar-bg"></div>
+    <div class="navbar-inner sliding">
+      <div class="left">
+        <a href="#" class="link back">
+          <i class="icon icon-back"></i>
+          <span class="if-not-md">Back</span>
+        </a>
+      </div>
+      <div class="title">{{Campana.Nombre}}</div>
+    </div>
+  </div>
+  <div class="page-content">
+    <div data-pagination='{"el": ".swiper-pagination"}' data-space-between="10" data-slides-per-view="1" data-centered-slides="true" class="swiper-container swiper-init ">
+      <div class="swiper-wrapper">
+        {{#each Paquetes}}
+        <div class="swiper-slide">
+          <div class="card">
+            <div class="card-content card-content-padding">
+              <p class="descripcion">{{Descripcion}}</p>
+              <p class="nombre">{{Nombre}}</p>
+              <p class="precio">MXN ${{Cantidad}}</p>
+            </div>
+          </div>
+
+
+
+         
+        </div>
+        {{/each}}
+        
+      </div>
+    </div>
+  
+  </div>
+</div>
+</template>
+<script>
+export default {};
+</script>
