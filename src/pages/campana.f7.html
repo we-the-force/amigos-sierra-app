@@ -5,19 +5,35 @@
     <div class="navbar-inner sliding">
       <div class="left">
         <a href="#" class="link back">
-          <i class="icon icon-back"></i>
-          <span class="if-not-md">Back</span>
+          <!-- <i class="icon icon-back"></i> -->
+          <span class="material-icons">
+            close
+            </span>
+          <!-- <span class="if-not-md">Back</span> -->
         </a>
       </div>
-      <div class="title">{{Campana.Nombre}}</div>
+      <!-- <div class="title">{{Campana.Nombre}}</div> -->
     </div>
   </div>
   <div class="page-content">
-    <div data-pagination='{"el": ".swiper-pagination"}' data-space-between="10" data-slides-per-view="1" data-centered-slides="true" class="swiper-container swiper-init ">
+    
+    <div class="logo">
+      <img src="/static/logo_white.svg" alt="">
+    </div>
+    <div class="title">{{Campana.Nombre}}</div>
+    <div data-pagination='{"el": ".swiper-pagination"}' data-space-between="10" data-slides-per-view="1.5" data-centered-slides="true" class="swiper-container swiper-init ">
       <div class="swiper-wrapper">
         {{#each Paquetes}}
-        <div class="swiper-slide">
-          <div class="card">
+        <div class="swiper-slide paquete">
+          {{#if Icono}}
+          <img src="http://localhost{{Icono.url}}" alt="" class="icono">
+          {{else}}
+          <span class="material-icons icono">
+            star
+            </span>
+          {{/if}}
+          <div class="card ">
+
             <div class="card-content card-content-padding">
               <p class="descripcion">{{Descripcion}}</p>
               <p class="nombre">{{Nombre}}</p>
@@ -33,10 +49,27 @@
         
       </div>
     </div>
-  
+    <div class="row no-gap">
+      <div class="col-20"></div>
+      <div class="col-60">
+        <a class="button button-raised  button-fill button-large link donar" data-force="true" data-ignore-cache="true" data-view=".view-main" href="/campana/{{id}}">Donar</a>
+
+      </div>
+      
+      <div class="col-20"></div>
+    </div>
+    <div class="footer">
+      <img src="/static/footer.svg" alt="" width="100%" height="auto">
+    </div>
   </div>
 </div>
+
 </template>
 <script>
-export default {};
+  
+export default {
+  on: {
+
+  }
+};
 </script>

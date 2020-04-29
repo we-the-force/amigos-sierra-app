@@ -2,15 +2,19 @@
 <template>
   <div id="app">
 
-   
+  
    
 
     <!-- Your main view, should have "view-main" class -->
     <div class="view view-main view-init safe-areas" data-url="/"></div>
 
-
+<div id="splash-home" class="popup popup-swipe-to-close">
+  <div class="block text-align-center">
+    <img src="/static/logo-color.svg" alt="" width="70%" height="auto">
+  </div>
+</div>
    
-
+    
    
 
   </div>
@@ -47,5 +51,10 @@
         });
       }
     },
+    on: {
+      pageMounted: function(e,page){
+        
+      }
+    }
   }
 </script>

@@ -1,4 +1,5 @@
 <template>
+  
   <div class="page" id="home" data-name="home">
     <!-- Top Navbar -->
     
@@ -10,48 +11,81 @@
             {{#each campanas}}
             <div class="swiper-slide">
               <div class="card card-expandable">
+                <div class="fullscreen-bg">
+                    <video playsinline autoplay muted loop >
+
+                        <source src="http://localhost{{Video.url}}" type="video/mp4">
+
+                    </video>
+                </div>
                 <div class="card-content">
-                  <div class="card-small" style="background-image: url('http://localhost{{Cover.url}}');">
-                    <div class="card-header text-color-white display-block">
-                      
-                    </div>
+                  <div class="card-small" style="background-image: url(http://localhost{{Cover.url}});">
+                    
                     <a href="#" class="link card-close card-opened-fade-in color-white" style="position: absolute; right: 15px; top: 15px">
                       <!-- <i class="icon f7-icons"></i> -->
                       <i class="f7-icons">multiply_circle_fill</i>
                     </a>
+                    <div class="pleca-card">
+                      <img src="/static/bg-card.svg" width="100%" height="auto" alt="">
+
+                    </div>
                   </div>
                   <div class="card-content-padding">
-                    <p class="block-title">{{Nombre}}</p>
+                    <p class="block-title" >
+                      <img src="http://localhost{{Icono.url}}" alt="">
+                    </p>
+                    <p class="block-title" style="margin-bottom: 25px;">{{Nombre}}</p>
                     <div class="block">
                       <div class="row">
                         <div class="col">
                           <p>{{Descripcion}}</p>
-                    <p>{{Descripcion}}</p>
-                    <p>{{Descripcion}}</p>
-                    <p>{{Descripcion}}</p>
-                    <p>{{Descripcion}}</p>
-                    <p>{{Descripcion}}</p>
-                    <p>{{Descripcion}}</p>
-                    <p>{{Descripcion}}</p>
-                    <p>{{Descripcion}}</p>
+                          <p>{{Descripcion}}</p>
+                        
                         </div>
                       </div>
+                      <div class="row no-gap">
+                        <div class="col-20"></div>
+                        <div class="col-60">
+                          <a class="button button-raised  button-fill button-large link" data-force="true" data-ignore-cache="true" data-view=".view-main" href="/campana/{{id}}" style="margin-top: 15px;">Donar</a>
+
+                        </div>
+
+                        <div class="col-20"></div>
+                      </div>
                     </div>
-                    ...
+                    
                   </div>
                 </div>
+                <!-- <div class="card-header text-color-white display-block">
+                </div> -->
+                
                 <div class="card-btns card-prevent-open">
+                  <div class="pleca-card">
+                    <img src="/static/bg-card.svg" width="100%" height="auto" alt="">
+  
+                  </div>
                   <div class="row no-gap">
                     <div class="col-10"></div>
                     <div class="col-80">
-                      <p>{{Nombre}}</p>
+                      <div class="row">
+                        <div class="col-70">
+                          <p class="campana-title">{{Nombre}}</p>
+                        </div>
+                        <div class="col-30">
+                          <div class="icon">
+                          <img src="http://localhost{{Icono.url}}" alt="" >
+
+                          </div>
+                        </div>
+                      </div>
+                      
                     </div>
                     <div class="col-10"></div>
                   </div>
                   <div class="row no-gap">
                     <div class="col-20"></div>
                     <div class="col-60">
-                      <a class="button button-raised button-round button-fill button-large link" data-force="true" data-ignore-cache="true" data-view=".view-main" href="/campana/{{id}}">Donar</a>
+                      <a class="button button-raised  button-fill button-large link" data-force="true" data-ignore-cache="true" data-view=".view-main" href="/campana/{{id}}">Donar</a>
   
                     </div>
                     
@@ -62,7 +96,6 @@
 
 
 
-             
             </div>
             {{/each}}
             
@@ -73,5 +106,44 @@
   </div>
 </template>
 <script>
-export default {}
+  import $$ from 'dom7';
+export default {
+  on: {
+      pageMounted: function(e, page) {
+        var self = this;
+        var app = self.$app;
+        var splashpopup = app.popup.create({
+          el: '#splash-home',
+          swipeToClose: true,
+
+        });
+        splashpopup.open();
+      },
+      pageInit: function(e, page) {
+        
+      },
+      pageBeforeIn: function(e, page) {
+        // Get all videos.
+        
+      },
+      pageAfterIn: function(e, page) {
+        var self = this;
+        var app = self.$app;
+        var videos = document.querySelectorAll('video');
+        $$('#splash-home').on('popup:swipeend', function (e) {
+          videos.forEach(function(v) {
+
+            v.play();
+          });
+        });
+        
+      },
+      pageBeforeOut: function(e, page) {
+      },
+      pageAfterOut: function(e, page) {
+      },
+      pageBeforeRemove: function(e, page) {
+      },
+    }
+}
 </script>

@@ -31,6 +31,9 @@ module.exports = {
     hotUpdateChunkFilename: 'hot/hot-update.js',
     hotUpdateMainFilename: 'hot/hot-update.json',
   },
+  externals:[
+      require('webpack-require-http'),
+  ],
   resolve: {
     extensions: ['.js', '.json'],
     alias: {
@@ -80,6 +83,7 @@ module.exports = {
             loader: 'framework7-component-loader',
             options: {
               helpersPath: './src/template7-helpers-list.js',
+              attrs: [":src","video:src"]
             },
           },
         ],

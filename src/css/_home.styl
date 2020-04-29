@@ -1,0 +1,99 @@
+#home
+  
+
+  .page-content
+    background-color #255457
+    padding-top 0
+  .swiper-slide-active
+    z-index 300
+  .swiper-pagination
+    z-index 1
+  .swiper-container
+    height 100%
+    z-index 300
+
+  .card
+    height 80vh
+    background-color #fff
+    .fullscreen-bg
+      width 100%
+      height auto
+      position absolute
+      z-index 1
+      video
+        width 100%
+        height auto
+    .block-title
+      font-size 20px
+      font-weight bold
+    
+    .card-btns
+      width 100%
+      position absolute
+      bottom 0
+      background-color #fff
+      padding-bottom 3vh
+      z-index 1
+      .row
+        z-index 1
+        position relative
+      .pleca-card
+        position absolute
+        top 0
+        transform translateY(-77px)
+        width 100%
+        z-index 0
+      .campana-title
+        font-weight bold
+        font-size 24px
+        line-height 28px
+        color #183738
+      .icon
+        text-align right
+        height 100%
+        position absolute
+        right 0
+        bottom 0
+        display flex
+        align-items center
+        justify-content center
+    .card-content-padding
+      padding-bottom 120px
+      padding-top 60px
+      .block-title
+        font-size 24px
+        font-weight bold
+        color: #183738
+        text-align center
+    .card-content
+      .card-small
+        position relative
+        height 80vh
+        background-size cover
+        background-repeat no-repeat
+        background-position 50% 50%
+        .pleca-card
+          position absolute
+          bottom 0
+          transform translateY(97px)
+          width 100%
+          z-index 0
+    
+    &.card-opened,&.card-opening
+      .fullscreen-bg
+        display none
+      .card-btns
+        
+        .button
+          display none
+        .pleca-card
+          display none
+
+        p,img
+          display none
+      .card-content
+        .card-small
+          height 30vh
+          background-size cover
+          background-repeat no-repeat
+          background-position 50% 50%
