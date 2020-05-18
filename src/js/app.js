@@ -21,7 +21,7 @@ var app = new Framework7({
   name: 'amigos-sierra', // App name
   theme: 'auto', // Automatic theme detection
   data: {
-    server: 'http://64.227.8.184/',
+    server: 'http://64.227.8.184:1337/',
   },
   view: {
     pushState: true
