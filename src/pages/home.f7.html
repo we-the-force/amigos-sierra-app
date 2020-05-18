@@ -14,12 +14,12 @@
                 <div class="fullscreen-bg">
                     <video playsinline autoplay muted loop >
 
-                        <source src="http://64.227.8.184{{Video.url}}" type="video/mp4">
+                        <source src="http://64.227.8.184:1337{{Video.url}}" type="video/mp4">
 
                     </video>
                 </div>
                 <div class="card-content">
-                  <div class="card-small" style="background-image: url(http://64.227.8.184{{Cover.url}});">
+                  <div class="card-small" style="background-image: url(http://64.227.8.184:1337{{Cover.url}});">
                     
                     <a href="#" class="link card-close card-opened-fade-in color-white" style="position: absolute; right: 15px; top: 15px">
                       <!-- <i class="icon f7-icons"></i> -->
@@ -32,7 +32,7 @@
                   </div>
                   <div class="card-content-padding">
                     <p class="block-title" >
-                      <img src="http://64.227.8.184{{Icono.url}}" alt="">
+                      <img src="http://64.227.8.184:1337{{Icono.url}}" alt="">
                     </p>
                     <p class="block-title" style="margin-bottom: 25px;">{{Nombre}}</p>
                     <div class="block">
@@ -72,7 +72,7 @@
                         </div>
                         <div class="col-30">
                           <div class="icon">
-                          <img src="http://64.227.8.184{{Icono.url}}" alt="" >
+                          <img src="http://64.227.8.184:1337{{Icono.url}}" alt="" >
 
                           </div>
                         </div>
@@ -111,7 +111,7 @@ export default {
     // Must return an object
     
     return {
-      server: 'http://64.227.8.184/'
+      server: 'http://64.227.8.184:1337/'
     }
   },
   on: {
