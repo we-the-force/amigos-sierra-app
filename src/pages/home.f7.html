@@ -14,12 +14,12 @@
                 <div class="fullscreen-bg">
                     <video playsinline autoplay muted loop >
 
-                        <source src="http://localhost{{Video.url}}" type="video/mp4">
+                        <source src="http://64.227.8.184{{Video.url}}" type="video/mp4">
 
                     </video>
                 </div>
                 <div class="card-content">
-                  <div class="card-small" style="background-image: url(http://localhost{{Cover.url}});">
+                  <div class="card-small" style="background-image: url(http://64.227.8.184{{Cover.url}});">
                     
                     <a href="#" class="link card-close card-opened-fade-in color-white" style="position: absolute; right: 15px; top: 15px">
                       <!-- <i class="icon f7-icons"></i> -->
@@ -32,14 +32,13 @@
                   </div>
                   <div class="card-content-padding">
                     <p class="block-title" >
-                      <img src="http://localhost{{Icono.url}}" alt="">
+                      <img src="http://64.227.8.184{{Icono.url}}" alt="">
                     </p>
                     <p class="block-title" style="margin-bottom: 25px;">{{Nombre}}</p>
                     <div class="block">
                       <div class="row">
                         <div class="col">
-                          <p>{{Descripcion}}</p>
-                          <p>{{Descripcion}}</p>
+                          <p class="descripcion">{{Descripcion}}</p>
                         
                         </div>
                       </div>
@@ -73,7 +72,7 @@
                         </div>
                         <div class="col-30">
                           <div class="icon">
-                          <img src="http://localhost{{Icono.url}}" alt="" >
+                          <img src="http://64.227.8.184{{Icono.url}}" alt="" >
 
                           </div>
                         </div>
@@ -108,6 +107,13 @@
 <script>
   import $$ from 'dom7';
 export default {
+  data: function () {
+    // Must return an object
+    
+    return {
+      server: 'http://64.227.8.184/'
+    }
+  },
   on: {
       pageMounted: function(e, page) {
         var self = this;

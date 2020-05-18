@@ -26,7 +26,7 @@
         {{#each Paquetes}}
         <div class="swiper-slide paquete">
           {{#if Icono}}
-          <img src="http://localhost{{Icono.url}}" alt="" class="icono">
+          <img src="http://64.227.8.184{{Icono.url}}" alt="" class="icono">
           {{else}}
           <span class="material-icons icono">
             star
@@ -52,7 +52,7 @@
     <div class="row no-gap">
       <div class="col-20"></div>
       <div class="col-60">
-        <a class="button button-raised  button-fill button-large link donar" data-force="true" data-ignore-cache="true" data-view=".view-main" href="/campana/{{id}}">Donar</a>
+        <a class="button button-raised  button-fill button-large link external donar" data-force="true" data-ignore-cache="true" data-view=".view-main" href="https://pay.conekta.com/link/622037bc51114169a9142cb9c3e079b9">Donar</a>
 
       </div>
       
@@ -68,6 +68,13 @@
 <script>
   
 export default {
+  data: function () {
+    // Must return an object
+   
+    return {
+      server: 'http://64.227.8.184/'
+    }
+  },
   on: {
 
   }
