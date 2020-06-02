@@ -46,6 +46,26 @@
          
         </div>
         {{/each}}
+        <div class="swiper-slide paquete">
+          
+          
+          <span class="material-icons icono">
+            star
+            </span>
+          
+          <div class="card set-price">
+
+            <div class="card-content card-content-padding">
+              <p class="descripcion">¿Cuánto?</p>
+              <p class="nombre">Tu decides</p>
+              <p class="precio personalizado ">MXN $<span class="custom-price">0</span>.00 <i class="f7-icons" >pencil</i></p>
+            </div>
+          </div>
+
+
+
+
+        </div>
         
       </div>
     </div>
@@ -66,17 +86,47 @@
 
 </template>
 <script>
-  
+  import $$ from 'dom7';
 export default {
+
   data: function () {
     // Must return an object
+
+   
    
     return {
       server: 'http://64.227.8.184/'
     }
   },
   on: {
+    pageMounted: function(e, page) {
 
+      var self = this;
+      var app = self.$app;
+      $$('.set-price').on('click', function () {
+        app.dialog.prompt('','Ingresa la cantidad a donar:', function (price) {
+          $$('.custom-price').html(price)
+
+        });
+      });
+    },
+    pageInit: function(e, page) {
+
+    },
+    pageBeforeIn: function(e, page) {
+      // Get all videos.
+
+    },
+    pageAfterIn: function(e, page) {
+      
+
+    },
+    pageBeforeOut: function(e, page) {
+    },
+    pageAfterOut: function(e, page) {
+    },
+    pageBeforeRemove: function(e, page) {
+    },
   }
 };
 </script>

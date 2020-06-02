@@ -14,6 +14,10 @@ import routes from './routes.js';
 // Import main app component
 import App from '../app.f7.html';
 
+import t7Helpers from './t7-helpers.js';
+
+
+
 var app = new Framework7({
   root: '#app', // App root element
   component: App, // App main component
@@ -23,6 +27,7 @@ var app = new Framework7({
   data: {
     server: 'http://64.227.8.184:1337/',
   },
+  
   view: {
     pushState: true
   },

@@ -14,7 +14,7 @@ var routes = [
     async: function (routeTo, routeFrom, resolve, reject) {
       // Router instance
       var router = this;
-
+      var campanasInfo;
       // App instance
       var app = router.app;
 
@@ -24,18 +24,25 @@ var routes = [
       app.request.promise.json(app.data.server+'campanas')
       .then(function (res) {
         console.log(res.data);
+        // app.preloader.hide();
+        campanasInfo=res.data;
+        app.request.promise.json(app.data.server+'informacion')
+        .then(function(respuesta){
         app.preloader.hide();
-        resolve(
-          {
-            component: HomePage,
-          },
-          {
-            context: {
-              campanas: res.data,
+          console.log(respuesta);
+          resolve(
+            {
+              component: HomePage,
+            },
+            {
+              context: {
+                campanas: campanasInfo,
+                informacion: respuesta.data,
+                server: app.data.server
+              }
             }
-          }
-        );
-
+          );
+        })
       });
       
     },

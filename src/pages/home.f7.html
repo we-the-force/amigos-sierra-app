@@ -8,6 +8,111 @@
       
         <div data-pagination='{"el": ".swiper-pagination"}' data-space-between="10" data-slides-per-view="1.2" data-centered-slides="true" class="swiper-container swiper-init demo-swiper demo-swiper-auto">
           <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <div class="card card-expandable">
+                <div class="fullscreen-bg">
+                    <video playsinline autoplay muted loop >
+
+                        <source src="" type="video/mp4">
+
+                    </video>
+                </div>
+                <div class="card-content">
+                  <div class="card-small" style="background-image: url(http://64.227.8.184:1337{{informacion.cover.url}});">
+
+                    <a href="#" class="link card-close card-opened-fade-in " style="position: absolute; right: 15px; top: 15px">
+                      <!-- <i class="icon f7-icons"></i> -->
+                      <i class="f7-icons" >multiply_circle_fill</i>
+                    </a>
+                    <div class="pleca-card">
+                      <img src="/static/bg-card.svg" width="100%" height="auto" alt="">
+
+                    </div>
+                  </div>
+                  <div class="card-content-padding">
+                    <p class="block-title" >
+                      <img src="{{server}}{{informacion.icono.url}}" alt="">
+                    </p>
+                    <p class="block-title" style="margin-bottom: 25px;">{{informacion.titulo}}</p>
+                    <div class="block">
+                      <div class="row">
+                        <div class="col">
+                          <p class="descripcion">{{informacion.descripcion}}</p>
+                          <p class="descripcion">
+                            <a href="{{informacion.direccion.link}}" class="link external" target="_blank">{{informacion.direccion.texto}}</a></p>
+                            <p class="descripcion">
+                              <a href="tel:{{informacion.telefono}}" class="link external" >{{informacion.telefono}}</a>
+                            </p>
+                            <p class="social">
+                              {{#each informacion.redes_sociales}}
+                              <a href="{{link}}" alt class="link external icon-only" target="_blank">
+                                <i class="f7-icons" >logo_{{texto}}</i>
+                              </a>
+                              {{/each}}
+                            </p>
+
+                        </div>
+                      </div>
+                      <!-- <div class="row no-gap">
+                        <div class="col-20"></div>
+                        <div class="col-60">
+                          <a class="button button-raised  button-fill button-large link" data-force="true" data-ignore-cache="true" data-view=".view-main" href="/campana/{{id}}" style="margin-top: 15px;">Donar</a>
+
+                        </div>
+
+                        <div class="col-20"></div>
+                      </div> -->
+                    </div>
+
+                  </div>
+                </div>
+                <!-- <div class="card-header text-color-white display-block">
+                </div> -->
+
+                <div class="card-btns card-prevent-open">
+                  <div class="pleca-card">
+                    <img src="/static/bg-card.svg" width="100%" height="auto" alt="">
+
+                  </div>
+                  <div class="row no-gap">
+                    <div class="col-10"></div>
+                    <div class="col-80">
+                      <div class="row">
+                        <div class="col-70">
+                          <p class="campana-title">{{informacion.titulo}}</p>
+                        </div>
+                        <div class="col-30">
+                          <div class="icon">
+                          <img src="{{server}}{{informacion.icono.url}}" alt="" >
+
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="col-10"></div>
+                  </div>
+                  <!-- <div class="row no-gap">
+                    <div class="col-20"></div>
+                    <div class="col-60">
+                      <a class="button button-raised  button-fill button-large link" data-force="true" data-ignore-cache="true" data-view=".view-main" href="/campana/{{id}}">Donar</a>
+
+                    </div>
+
+                    <div class="col-20"></div>
+                  </div> -->
+                </div>
+                <div class="card-info-btn" style="position: absolute; right: 15px; top: 15px">
+                  <a href="#" class="link" >
+                    <!-- <i class="icon f7-icons"></i> -->
+                    <i class="f7-icons" style="">info_circle_fill</i>
+                  </a>
+                </div>
+              </div>
+
+
+
+            </div>
             {{#each campanas}}
             <div class="swiper-slide">
               <div class="card card-expandable">
@@ -21,7 +126,7 @@
                 <div class="card-content">
                   <div class="card-small" style="background-image: url(http://64.227.8.184:1337{{Cover.url}});">
                     
-                    <a href="#" class="link card-close card-opened-fade-in color-white" style="position: absolute; right: 15px; top: 15px">
+                    <a href="#" class="link card-close card-opened-fade-in " style="position: absolute; right: 15px; top: 15px">
                       <!-- <i class="icon f7-icons"></i> -->
                       <i class="f7-icons">multiply_circle_fill</i>
                     </a>
@@ -91,6 +196,12 @@
                     <div class="col-20"></div>
                   </div>
                 </div>
+                <div class="card-info-btn" style="position: absolute; right: 15px; top: 15px">
+                  <a href="#" class="link" >
+                    <!-- <i class="icon f7-icons"></i> -->
+                    <i class="f7-icons" style="">info_circle_fill</i>
+                  </a>
+                </div>
               </div>
 
 
@@ -106,6 +217,8 @@
 </template>
 <script>
   import $$ from 'dom7';
+  import showdown from 'showdown';
+  var converter = new showdown.Converter();
 export default {
   data: function () {
     // Must return an object
@@ -116,6 +229,7 @@ export default {
   },
   on: {
       pageMounted: function(e, page) {
+        
         var self = this;
         var app = self.$app;
         var splashpopup = app.popup.create({
