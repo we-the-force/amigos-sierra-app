@@ -21,15 +21,13 @@ var routes = [
       // Show Preloader
       app.preloader.show();
 
-      app.request.promise.json(app.data.server+'campanas')
+      app.request.promise.json(app.data.server+'/items/campana?fields=*.*')
       .then(function (res) {
-        console.log(res.data);
         // app.preloader.hide();
-        campanasInfo=res.data;
-        app.request.promise.json(app.data.server+'informacion')
+        campanasInfo=res.data.data;
+        app.request.promise.json(app.data.server+'/items/informacion?fields=*.*')
         .then(function(respuesta){
         app.preloader.hide();
-          console.log(respuesta);
           resolve(
             {
               component: HomePage,
@@ -37,7 +35,7 @@ var routes = [
             {
               context: {
                 campanas: campanasInfo,
-                informacion: respuesta.data,
+                informacion: respuesta.data.data[0],
                 server: app.data.server
               }
             }
@@ -63,9 +61,8 @@ var routes = [
       // Show Preloader
       app.preloader.show();
 
-      app.request.promise.json(app.data.server+'campanas/'+campanaId)
+      app.request.promise.json(app.data.server+'/items/campana/'+campanaId+'?fields=*.*.*')
       .then(function (res) {
-        console.log(res.data);
         app.preloader.hide();
         resolve(
           {
@@ -73,8 +70,9 @@ var routes = [
           },
           {
             context: {
-              Campana: res.data,
-              Paquetes: res.data.Paquetes,
+              server: app.data.server,
+              campana: res.data.data,
+              paquetes: res.data.data.paquetes,
             }
           }
         );

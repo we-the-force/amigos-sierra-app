@@ -18,7 +18,7 @@
                     </video>
                 </div>
                 <div class="card-content">
-                  <div class="card-small" style="background-image: url(http://64.227.8.184:1337{{informacion.cover.url}});">
+                  <div class="card-small" style="background-image: url({{informacion.cover.data.full_url}});">
 
                     <a href="#" class="link card-close card-opened-fade-in " style="position: absolute; right: 15px; top: 15px">
                       <!-- <i class="icon f7-icons"></i> -->
@@ -31,15 +31,16 @@
                   </div>
                   <div class="card-content-padding">
                     <p class="block-title" >
-                      <img src="{{server}}{{informacion.icono.url}}" alt="">
+                      <img src="{{informacion.icono.data.full_url}}" alt="">
                     </p>
                     <p class="block-title" style="margin-bottom: 25px;">{{informacion.titulo}}</p>
                     <div class="block">
                       <div class="row">
                         <div class="col">
                           <p class="descripcion">{{informacion.descripcion}}</p>
+                          <p class="descripcion"><b>Información de contacto:</b></p>
                           <p class="descripcion">
-                            <a href="{{informacion.direccion.link}}" class="link external" target="_blank">{{informacion.direccion.texto}}</a></p>
+                            <a href="{{informacion.direccion_link}}" class="link external" target="_blank">{{informacion.direccion}}</a></p>
                             <p class="descripcion">
                               <a href="tel:{{informacion.telefono}}" class="link external" >{{informacion.telefono}}</a>
                             </p>
@@ -83,7 +84,7 @@
                         </div>
                         <div class="col-30">
                           <div class="icon">
-                          <img src="{{server}}{{informacion.icono.url}}" alt="" >
+                          <img src="{{informacion.icono.data.full_url}}" alt="" >
 
                           </div>
                         </div>
@@ -119,12 +120,12 @@
                 <div class="fullscreen-bg">
                     <video playsinline autoplay muted loop >
 
-                        <source src="http://64.227.8.184:1337{{Video.url}}" type="video/mp4">
+                        <source src="{{video.data.full_url}}" type="video/mp4">
 
                     </video>
                 </div>
                 <div class="card-content">
-                  <div class="card-small" style="background-image: url(http://64.227.8.184:1337{{Cover.url}});">
+                  <div class="card-small" style="background-image: url({{cover.data.full_url}});">
                     
                     <a href="#" class="link card-close card-opened-fade-in " style="position: absolute; right: 15px; top: 15px">
                       <!-- <i class="icon f7-icons"></i> -->
@@ -137,13 +138,13 @@
                   </div>
                   <div class="card-content-padding">
                     <p class="block-title" >
-                      <img src="http://64.227.8.184:1337{{Icono.url}}" alt="">
+                      <img src="{{icono.data.full_url}}" alt="">
                     </p>
-                    <p class="block-title" style="margin-bottom: 25px;">{{Nombre}}</p>
+                    <p class="block-title" style="margin-bottom: 25px;">{{nombre}}</p>
                     <div class="block">
                       <div class="row">
                         <div class="col">
-                          <p class="descripcion">{{Descripcion}}</p>
+                          <p class="descripcion">{{descripcion}}</p>
                         
                         </div>
                       </div>
@@ -173,11 +174,11 @@
                     <div class="col-80">
                       <div class="row">
                         <div class="col-70">
-                          <p class="campana-title">{{Nombre}}</p>
+                          <p class="campana-title">{{nombre}}</p>
                         </div>
                         <div class="col-30">
                           <div class="icon">
-                          <img src="http://64.227.8.184:1337{{Icono.url}}" alt="" >
+                          <img src="{{icono.data.full_url}}" alt="" >
 
                           </div>
                         </div>
@@ -224,7 +225,7 @@ export default {
     // Must return an object
     
     return {
-      server: 'http://64.227.8.184:1337/'
+      server: '{{server}}/'
     }
   },
   on: {

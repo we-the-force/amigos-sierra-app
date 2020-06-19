@@ -1,5 +1,5 @@
 <template>
-<div class="page" data-name="campana" id="campana">
+<div class="page" data-name="campana" data-campana="{{campana.nombre}}" data-campanaid="{{campana.id}}" id="campana">
   <div class="navbar">
     <div class="navbar-bg"></div>
     <div class="navbar-inner sliding">
@@ -12,7 +12,7 @@
           <!-- <span class="if-not-md">Back</span> -->
         </a>
       </div>
-      <!-- <div class="title">{{Campana.Nombre}}</div> -->
+      <!-- <div class="title">{{campana.nombre}}</div> -->
     </div>
   </div>
   <div class="page-content">
@@ -20,13 +20,13 @@
     <div class="logo">
       <img src="/static/logo_white.svg" alt="">
     </div>
-    <div class="title">{{Campana.Nombre}}</div>
+    <div class="title">{{campana.nombre}}</div>
     <div data-pagination='{"el": ".swiper-pagination"}' data-space-between="10" data-slides-per-view="1.5" data-centered-slides="true" class="swiper-container swiper-init ">
       <div class="swiper-wrapper">
-        {{#each Paquetes}}
+        {{#each paquetes}}
         <div class="swiper-slide paquete">
-          {{#if Icono}}
-          <img src="http://64.227.8.184:1337{{Icono.url}}" alt="" class="icono">
+          {{#if icono}}
+          <img src="{{icono.data.full_url}}" alt="" class="icono">
           {{else}}
           <span class="material-icons icono">
             star
@@ -35,9 +35,10 @@
           <div class="card ">
 
             <div class="card-content card-content-padding">
-              <p class="descripcion">{{Descripcion}}</p>
-              <p class="nombre">{{Nombre}}</p>
-              <p class="precio">MXN ${{Cantidad}}</p>
+              <p class="descripcion">{{descripcion}}</p>
+              <p class="nombre">{{nombre}}</p>
+              <p class="precio donacion" data-donacion="{{cantidad}}">MXN ${{cantidad}}</p>
+              
             </div>
           </div>
 
@@ -58,7 +59,7 @@
             <div class="card-content card-content-padding">
               <p class="descripcion">¿Cuánto?</p>
               <p class="nombre">Tu decides</p>
-              <p class="precio personalizado ">MXN $<span class="custom-price">0</span>.00 <i class="f7-icons" >pencil</i></p>
+              <p class="precio personalizado donacion" data-donacion="">MXN $<span class="custom-price">0</span>.00 <i class="f7-icons" >pencil</i></p>
             </div>
           </div>
 
@@ -72,7 +73,7 @@
     <div class="row no-gap">
       <div class="col-20"></div>
       <div class="col-60">
-        <a class="button button-raised  button-fill button-large link external donar" data-force="true" data-ignore-cache="true" data-view=".view-main" href="https://pay.conekta.com/link/622037bc51114169a9142cb9c3e079b9">Donar</a>
+        <a class="button button-raised  button-fill button-large link donar" data-force="true" data-ignore-cache="true" data-view=".view-main" href="">Donar</a>
 
       </div>
       
@@ -89,24 +90,69 @@
   import $$ from 'dom7';
 export default {
 
-  data: function () {
-    // Must return an object
-
-   
-   
-    return {
-      server: 'http://64.227.8.184/'
-    }
-  },
+ 
   on: {
     pageMounted: function(e, page) {
 
       var self = this;
       var app = self.$app;
+      app.request.setup({
+        headers: {
+          'accept': 'application/vnd.conekta-v2.0.0+json',
+          'autorization': app.data.token,
+          'cache-control': 'no-cache',
+          'content-type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
+        }
+      });
       $$('.set-price').on('click', function () {
         app.dialog.prompt('','Ingresa la cantidad a donar:', function (price) {
-          $$('.custom-price').html(price)
+          $$('.set-price .donacion').data('donacion',price);
+          $$('.custom-price').html(price);
+        
 
+        });
+      });
+      $$('a.donar').on('click', function(e){
+        e.preventDefault();
+        var cantidadDonada = $$('.swiper-slide-active .donacion').data('donacion');
+        var campanaName = $$('.page').data('campana');
+        var campanaId = $$('.page').data('campanaid');
+        const today = new Date();
+        const tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        var expiration_date = tomorrow.getTime();
+        app.request.promise.postJSON('https://api.conekta.io/checkouts', 
+        {
+          "name": "Donación Anónima",
+          "type": "PaymentLink",
+          "recurrent": false,
+          "expired_at": expiration_date,
+          "allowed_payment_methods": [
+            "cash",
+            "card"
+          ],
+          "needs_shipping_contact": false,
+          "order_template": {
+            "line_items": [
+                {
+              "name": campanaName,
+              "description": "Donación",
+          "unit_price": cantidadDonada,
+              "quantity": 1
+                }
+            ],
+            "currency": "MXN",
+            "customer_info": {
+                "name": "Donador Anónimo",
+                "email": "administracion@amigosdelasierra.org",
+                "phone": "2147483647"
+            }
+          }
+        }
+        )
+        .then(function (res) {
+          console.log(res.data);
         });
       });
     },
