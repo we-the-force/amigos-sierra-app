@@ -26,7 +26,7 @@ var app = new Framework7({
   theme: 'auto', // Automatic theme detection
   data: {
     token: 'Basic a2V5XzZ2VjJ6Mkh5SjdOS3hNcWU1cmJlcVE6',
-    server: 'http://donar.amigosdelasierra.org/administrador/public/amigos-sierra',
+    server: 'https://donar.amigosdelasierra.org/administrador/public/amigos-sierra',
   },
   
   view: {

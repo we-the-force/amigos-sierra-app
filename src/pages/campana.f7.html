@@ -74,6 +74,7 @@
       <div class="col-20"></div>
       <div class="col-60">
         <a class="button button-raised  button-fill button-large link donar" data-force="true" data-ignore-cache="true" data-view=".view-main" href="">Donar</a>
+        <!-- <a class="button button-raised  button-fill button-large link external donar" data-force="true" data-ignore-cache="true" data-view=".view-main" href="https://pay.conekta.com/link/b4cfa5543f104e3981f36246efea87ce">Donar</a> -->
 
       </div>
       
@@ -93,18 +94,21 @@ export default {
  
   on: {
     pageMounted: function(e, page) {
-
+      // const curl = new (require( 'curl-request' ))();
       var self = this;
       var app = self.$app;
-      app.request.setup({
-        headers: {
-          'accept': 'application/vnd.conekta-v2.0.0+json',
-          'autorization': app.data.token,
-          'cache-control': 'no-cache',
-          'content-type': 'application/json',
-          'Access-Control-Allow-Origin': '*'
-        }
-      });
+      const curl = new (require( 'curl-request' ))();
+
+      // app.request.setup({
+      //   headers: {
+      //     'accept': 'application/vnd.conekta-v2.0.0+json',
+      //     'autorization': app.data.token,
+      //     'cache-control': 'no-cache',
+      //     'content-type': 'application/json',
+      //     'Access-Control-Allow-Origin': '*'
+      //   },
+      //   crossDomain: true
+      // });
       $$('.set-price').on('click', function () {
         app.dialog.prompt('','Ingresa la cantidad a donar:', function (price) {
           $$('.set-price .donacion').data('donacion',price);
@@ -113,48 +117,98 @@ export default {
 
         });
       });
+
+       
       $$('a.donar').on('click', function(e){
         e.preventDefault();
-        var cantidadDonada = $$('.swiper-slide-active .donacion').data('donacion');
-        var campanaName = $$('.page').data('campana');
-        var campanaId = $$('.page').data('campanaid');
-        const today = new Date();
-        const tomorrow = new Date(today);
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        var expiration_date = tomorrow.getTime();
-        app.request.promise.postJSON('https://api.conekta.io/checkouts', 
-        {
-          "name": "Donación Anónima",
-          "type": "PaymentLink",
-          "recurrent": false,
-          "expired_at": expiration_date,
-          "allowed_payment_methods": [
-            "cash",
-            "card"
+        curl
+      .setHeaders([
+          'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36',
+          'accept: application/vnd.conekta-v2.0.0+json',
+          'access-control-allow-origin: *',
+          'authorization: Basic a2V5XzZ2VjJ6Mkh5SjdOS3hNcWU1cmJlcVE6',
+          'cache-control: no-cache',
+          'content-type: application/json'
+      ])
+      .setBody({
+        "name": "Donación Anónima",
+        "type": "PaymentLink",
+        "recurrent": false,
+        "expired_at": 1595221200,
+        "allowed_payment_methods": [
+          "cash",
+          "card"
+        ],
+        "needs_shipping_contact": false,
+        "order_template": {
+          "line_items": [
+              {
+            "name": "Amigos de la Sierra",
+            "description": "Donacion",
+        "unit_price": 10000,
+            "quantity": 1
+              }
           ],
-          "needs_shipping_contact": false,
-          "order_template": {
-            "line_items": [
-                {
-              "name": campanaName,
-              "description": "Donación",
-          "unit_price": cantidadDonada,
-              "quantity": 1
-                }
-            ],
-            "currency": "MXN",
-            "customer_info": {
-                "name": "Donador Anónimo",
-                "email": "administracion@amigosdelasierra.org",
-                "phone": "2147483647"
-            }
+          "currency": "MXN",
+          "customer_info": {
+              "name": "Donador Anónimo",
+                        "email": "administracion@amigosdelasierra.org",
+                        "phone": "2147483647"
           }
         }
-        )
-        .then(function (res) {
-          console.log(res.data);
-        });
+      })
+      .post('https://api.conekta.io/checkouts')
+      .then(({statusCode, body, headers}) => {
+          console.log(statusCode, body, headers)
+      })
+      .catch((e) => {
+          console.log(e);
       });
+      });
+      
+
+      // $$('a.donar').on('click', function(e){
+      //   e.preventDefault();
+      //   var cantidadDonada = $$('.swiper-slide-active .donacion').data('donacion');
+      //   var campanaName = $$('.page').data('campana');
+      //   var campanaId = $$('.page').data('campanaid');
+      //   const today = new Date();
+      //   const tomorrow = new Date(today);
+      //   tomorrow.setDate(tomorrow.getDate() + 1);
+      //   var expiration_date = tomorrow.getTime();
+      //   app.request.promise.post('https://api.conekta.io/checkouts', 
+      //   {
+      //     "name": "Donación Anónima",
+      //     "type": "PaymentLink",
+      //     "recurrent": false,
+      //     "expired_at": expiration_date,
+      //     "allowed_payment_methods": [
+      //       "cash",
+      //       "card"
+      //     ],
+      //     "needs_shipping_contact": false,
+      //     "order_template": {
+      //       "line_items": [
+      //           {
+      //         "name": campanaName,
+      //         "description": "Donación",
+      //     "unit_price": cantidadDonada,
+      //         "quantity": 1
+      //           }
+      //       ],
+      //       "currency": "MXN",
+      //       "customer_info": {
+      //           "name": "Donador Anónimo",
+      //           "email": "administracion@amigosdelasierra.org",
+      //           "phone": "2147483647"
+      //       }
+      //     }
+      //   }
+      //   )
+      //   .then(function (res) {
+      //     console.log(res.data);
+      //   });
+      // });
     },
     pageInit: function(e, page) {
 

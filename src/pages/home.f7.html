@@ -5,6 +5,7 @@
     
     <!-- Scrollable page content-->
     <div class="page-content">
+       
       
         <div data-pagination='{"el": ".swiper-pagination"}' data-space-between="10" data-slides-per-view="1.2" data-centered-slides="true" class="swiper-container swiper-init demo-swiper demo-swiper-auto">
           <div class="swiper-wrapper">
@@ -117,12 +118,13 @@
             {{#each campanas}}
             <div class="swiper-slide">
               <div class="card card-expandable">
-                <div class="fullscreen-bg">
+                <div class="fullscreen-bg" >
                     <video playsinline autoplay muted loop >
 
                         <source src="{{video.data.full_url}}" type="video/mp4">
 
                     </video>
+                    <div class="campana-bg" style="background-image: url({{cover.data.full_url}});"></div>
                 </div>
                 <div class="card-content">
                   <div class="card-small" style="background-image: url({{cover.data.full_url}});">
@@ -215,19 +217,13 @@
       
     </div>
   </div>
+ 
 </template>
 <script>
   import $$ from 'dom7';
-  import showdown from 'showdown';
-  var converter = new showdown.Converter();
+  
 export default {
-  data: function () {
-    // Must return an object
-    
-    return {
-      server: '{{server}}/'
-    }
-  },
+  
   on: {
       pageMounted: function(e, page) {
         
@@ -246,11 +242,36 @@ export default {
       pageBeforeIn: function(e, page) {
         // Get all videos.
         
+        
       },
       pageAfterIn: function(e, page) {
         var self = this;
         var app = self.$app;
+       
         var videos = document.querySelectorAll('video');
+        if (app.device.android){
+          $$('video').css('display', 'block');
+        }
+
+       
+
+//         if(app.device.ios){
+//           console.log('ios');
+          
+//           var dynamicSheet = app.sheet.create({
+//   content: '<div class="sheet-modal install-modal my-sheet-swipe-to-close" style="height:auto; --f7-sheet-bg-color: #fff;"> <div class="sheet-modal-inner"> <div class="page-content"> <div class="block-title block-title-large"></div> <div class="block"> <div class="button">DESCARGA EL APP HACIENDO CLICK AQUÍ</div><div class="block"></div> </div> </div> </div> </div>',
+//   // Events
+//   on: {
+//     open: function (sheet) {
+//       console.log('Sheet open');
+//     },
+//     opened: function (sheet) {
+//       console.log('Sheet opened');
+//     },
+//   }
+// });
+//           // dynamicSheet.open();
+//         }
         $$('#splash-home').on('popup:swipeend', function (e) {
           videos.forEach(function(v) {
 

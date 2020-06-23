@@ -1,0 +1,13 @@
+ℹ Next steps:
+  - 🔥 Run "npm run start" - run development server
+  - 🔧 Run "npm run dev" - run development server
+  - 🔧 Run "npm run build-dev" - build web app using development mode (faster build without minification and optimization)
+  - 🔧 Run "npm run build-prod" - build web app for production
+  - 📱 Run "npm run build-dev-cordova" - build cordova app using development mode (faster build without minification and optimization)
+  - 📱 Run "npm run build-prod-cordova" - build cordova app
+  - 📱 Run "npm run build-dev-cordova-ios" - build cordova iOS app using development mode (faster build without minification and optimization)
+  - 📱 Run "npm run build-prod-cordova-ios" - build cordova iOS app
+  - 📱 Run "npm run build-dev-cordova-android" - build cordova Android app using development mode (faster build without minification and optimization)
+  - 📱 Run "npm run build-prod-cordova-android" - build cordova Android app
+  - 📖 Visit documentation at https://framework7.io/docs/
+  - 📖 Check README.md in project root folder with further instructions

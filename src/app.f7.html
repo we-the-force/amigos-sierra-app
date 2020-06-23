@@ -12,14 +12,37 @@
   <div class="block text-align-center">
     <img src="/static/logo-color.svg" alt="" width="70%" height="auto">
   </div>
+  
 </div>
-   
+<div id="desktop">
+  <div class="block">
+    <p style="text-align: center;">
+      <img src="/static/logo-color.svg" alt="" class="logo">
+    </p>
+  </div>
+  <div class="block-title">
+    <p style="text-align: center; color: white;">
+      Visítanos en tu celular
+    </p>
+  </div>
+  <div class="block">
+    <p style="text-align: center;">
+      <img src="/static/qrcode.png" alt="" class="qr">
+
+    </p>
+  </div>
+</div>
+
+
+
     
    
 
   </div>
+ 
 </template>
 <script>
+  import $$ from 'dom7';
   export default {
     data() {
       return {
@@ -53,7 +76,12 @@
     },
     on: {
       pageMounted: function(e,page){
-        
+        var self = this;
+        var app = self.$app;
+        if (app.device.desktop){
+          console.log('desktop');
+          $$('#desktop').css('display','block');
+        }
       }
     }
   }
