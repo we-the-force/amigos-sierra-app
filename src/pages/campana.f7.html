@@ -98,18 +98,7 @@ export default {
       var self = this;
       var app = self.$app;
 
-      // app.request.setup({
-      //   headers: {
-      //     'accept': 'application/vnd.conekta-v2.0.0+json',
-      //     'autorization': app.data.token,
-      //     'cache-control': 'no-cache',
-      //     'content-type': 'application/json',
-      //     'Access-Control-Allow-Origin': '*'
-      //   },
-      //   crossDomain: true
-
-      
-      // });
+  
       $$('.set-price').on('click', function () {
         app.dialog.prompt('','Ingresa la cantidad a donar:', function (price) {
           $$('.set-price .donacion').data('donacion',price);
@@ -120,90 +109,39 @@ export default {
       });
 
        
-      // $$('a.donar').on('click', function(e){
-      //   e.preventDefault();
-      //   curl
-      // .setHeaders([
-      //     'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36',
-      //     'accept: application/vnd.conekta-v2.0.0+json',
-      //     'access-control-allow-origin: *',
-      //     'authorization: Basic a2V5XzZ2VjJ6Mkh5SjdOS3hNcWU1cmJlcVE6',
-      //     'cache-control: no-cache',
-      //     'content-type: application/json'
-      // ])
-      // .setBody({
-      //   "name": "Donación Anónima",
-      //   "type": "PaymentLink",
-      //   "recurrent": false,
-      //   "expired_at": 1595221200,
-      //   "allowed_payment_methods": [
-      //     "cash",
-      //     "card"
-      //   ],
-      //   "needs_shipping_contact": false,
-      //   "order_template": {
-      //     "line_items": [
-      //         {
-      //       "name": "Amigos de la Sierra",
-      //       "description": "Donacion",
-      //   "unit_price": 10000,
-      //       "quantity": 1
-      //         }
-      //     ],
-      //     "currency": "MXN",
-      //     "customer_info": {
-      //         "name": "Donador Anónimo",
-      //                   "email": "administracion@amigosdelasierra.org",
-      //                   "phone": "2147483647"
-      //     }
-      //   }
-      // })
-      // .post('https://api.conekta.io/checkouts')
-      // .then(({statusCode, body, headers}) => {
-      //     console.log(statusCode, body, headers)
-      // })
-      // .catch((e) => {
-      //     console.log(e);
-      // });
-      // });
+
       
 
       $$('a.donar').on('click', function(e){
         e.preventDefault();
+        app.dialog.preloader('Generando Link de pago...');
         var cantidadDonada = $$('.swiper-slide-active .donacion').data('donacion');
         var donacion = cantidadDonada*100;
         var campanaName = $$('.page').data('campana');
         var campanaId = $$('.page').data('campanaid');
-        const today = new Date();
+        var today = new Date();
+        today.setHours(0,0,0,0);
         const tomorrow = new Date(today);
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        var expiration_date = tomorrow.getTime();
-        
-        app.request.setup({
-          headers: {
-            "accept": "application/json, text/plain, */*",
-            "accept-language": "es,en-US;q=0.9,en;q=0.8",
-            "authorization": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjQ0QjIwNTMxQTU1MEMyQjkwNTRBNEYzNDNCREY2OTlGMDA4NzExMDYiLCJ0eXAiOiJhdCtqd3QiLCJ4NXQiOiJSTElGTWFWUXdya0ZTazgwTzk5cG53Q0hFUVkifQ.eyJuYmYiOjE1OTMxOTIyNzYsImV4cCI6MTU5MzIwMzA3NiwiaXNzIjoiaHR0cHM6Ly9pZGVudGl0eS5jb25la3RhLmNvbSIsImF1ZCI6WyJjcGFuZWwtZ2F0ZXdheS1hcGkiLCJvbmJvYXJkaW5nLWdhdGV3YXktYXBpIl0sImNsaWVudF9pZCI6ImY1MDhiYjg1LTExODgtNGMwOC1iZWIzLWEwNzZlMWQ0MWY5ZSIsInN1YiI6IjNiZTEwYjJkLTY2NzYtNGRhMC1iOWM1LTU3YTJlYjVmZDBiMiIsImF1dGhfdGltZSI6MTU5MzE5MjI3NiwiaWRwIjoibG9jYWwiLCJzdGF0dXMiOiIxIiwic2NvcGUiOlsib3BlbmlkIiwicHJvZmlsZSIsInN0YXR1cyIsImNwYW5lbC1nYXRld2F5LWFwaSIsIm9uYm9hcmRpbmctZ2F0ZXdheS1hcGkiXSwiYW1yIjpbInB3ZCJdfQ.w5khXW0S4JaQj5SDFuyRAfJznzCjxT_iiRL-WUbfM3IKGeXy7pNEeAQcOwbN5ffSwZpiSxcX47mxWoDXyOS4besUDBbTKxEAUqwgWwWgdFFi3hVETDvmLu_Av-2p3oZgsQ0cHz-Xw23siWBuj3Lr6M8BdpUzlWM84xRtNAiG5vZkaX7Tzeu42LP1fatwaDPx2lgEsbl87CG97gfkQ1eqc8Te4dmT8mdY2Yh89glC-aYZRDc5nDSTmZCPoGuNIPMAFaaw9fZJUaftLEPmMYC0moIAtEtnoKoPKun_MX2XwQDmm-QsBr_nZSqRWh39XwX2tXgU86BxT9DQF6WMKEpcIH131bkdXyXv1tv0XnzY-vMK5jPz0eo9mGQ5k2MtqHWETmM6azasmsqqWgHK6-O3RN7DzlXoPRfR7m4czAPSrGING0JK-HtBm6GM9dNY5WE2LB1s6UOTtj-ooi6Awd69Xpnr4qqWaa6VvvNOe8uTiSuPcKPW7RFJWoGoQ-yJNg0v2z71bnl15ghTjLFHE6_4n8ipAU4mtpQ5gsPEyI_ZMqYBy8fBN7CHWoXdqW1gcixOm3MT-AOFK-vTk9CFhy4xfXBvRLgOIfov3gxwWvZMfA0sPlwLrKcU1tp5wkzrbC5jiT0ryYJ0-eKgEEM_uWkItGjIapfp7N5B3ExZYBqbl2w",
-            "companyid": "",
-            "content-type": "application/json",
-            "entityid": "", 
-            "idempotencykey": "2d1df479b245ee0527f35805471343071593125790556",
-            "sec-fetch-dest": "empty",
-            "sec-fetch-mode": "cors",
-            "sec-fetch-site": "same-site",
-            "serviceorigin": "PaymentLink",
-            "userid": "3be10b2d-6676-4da0-b9c5-57a2eb5fd0b2"
-          }
-        });
 
-        app.request.promise.postJSON('https://p_back.conekta.com/v1/checkout-service/checkout-requests', 
-        {"allowedPaymentMethods":["Cash","Card","BankTransfer"],"amount":donacion,"companyId":"5ec30659629b2b0001f737b3","entityId":"4fefd8f2-426e-4b15-8d8b-851d6ef1a590","expiredDays":2,"name": campanaName,"needsShippingContact":false,"orderTemplate":{"lineItems":[{"name":campanaName,"unitPrice":donacion,"quantity":1}],"currency":"MXN","customerInfo":{"name":"Donador Anónimo","email":"administracion@amigosdelasierra.org"}},"quantity":1,"recurrent":false,"type":"PaymentLink","origin":"Panel"}
+        tomorrow.setDate(tomorrow.getDate() + 10);
+        var expiration_date = Math.round(tomorrow.getTime()/1000);
+        app.request.promise.postJSON(app.data.server+'/custom/paymentlink?price='+donacion+'&expiration='+expiration_date,
+        {
+          
+        }
 
         )
         .then(function (res) {
-          console.log(res.data);
+          console.log(res);
+        app.dialog.close();
+          window.open(res.data.paymentLink.url, '_blank');
+        })
+        .catch((error) => {
+          console.error(error);
+          app.dialog.close();
+          app.dialog.alert('Encontramos un error, por favor, vuelva a intentarlo. Gracias', 'Error...');
         });
-       
+        
 
       });
     },
