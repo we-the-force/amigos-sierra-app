@@ -1,167 +1,71 @@
-<template>
-<div class="page" data-name="campana" data-campana="{{campana.nombre}}" data-campanaid="{{campana.id}}" id="campana">
-  <div class="navbar">
-    <div class="navbar-bg"></div>
-    <div class="navbar-inner sliding">
-      <div class="left">
-        <a href="#" class="link back">
-          <!-- <i class="icon icon-back"></i> -->
-          <span class="material-icons">
-            close
-            </span>
-          <!-- <span class="if-not-md">Back</span> -->
-        </a>
-      </div>
-      <!-- <div class="title">{{campana.nombre}}</div> -->
-    </div>
-  </div>
-  <div class="page-content">
-    
-    <div class="logo">
-      <img src="/static/logo_white.svg" alt="">
-    </div>
-    <div class="title">{{campana.nombre}}</div>
-    <div data-pagination='{"el": ".swiper-pagination"}' data-space-between="10" data-slides-per-view="1.5" data-centered-slides="true" class="swiper-container swiper-init ">
-      <div class="swiper-wrapper">
-        {{#each paquetes}}
-        <div class="swiper-slide paquete">
-          {{#if icono}}
-          <img src="{{icono.data.full_url}}" alt="" class="icono">
-          {{else}}
-          <span class="material-icons icono">
-            star
-            </span>
-          {{/if}}
-          <div class="card ">
+<?php
 
-            <div class="card-content card-content-padding">
-              <p class="descripcion">{{descripcion}}</p>
-              <p class="nombre">{{nombre}}</p>
-              <p class="precio donacion" data-donacion="{{cantidad}}">MXN ${{cantidad}}</p>
-              
-            </div>
-          </div>
+use Directus\Application\Http\Request;
+use Directus\Application\Http\Response;
+use Directus\Services\ItemsService;
 
 
 
-         
-        </div>
-        {{/each}}
-        <div class="swiper-slide paquete">
-          
-          
-          <span class="material-icons icono">
-            star
-            </span>
-          
-          <div class="card set-price">
+return [
+  // The endpoint path:
+  // '' means it is located at: `/custom/<endpoint-id>`
+  // '/` means it is located at: `/custom/<endpoint-id>/`
+  // 'test' and `/test` means it is located at: `/custom/<endpoint-id>/test
+  // if the handler is a Closure or Anonymous function, it's binded to the app container. Which means $this = to the app container.
+    '' => [
+        'method' => 'POST',
+        'handler' => function (Request $request, Response $response) {
+        // Get all answers from DB
+            $itemsService = new ItemsService($this);
+            // $email = $request->getAttribute('email');
+            $params = $request->getQueryParams();
+            // $license = $itemsService->find('licenses', $serial, $params);
+            $date = (int)$params["expiration"];
+            // $date = 1595998800;
+            // $date=date_format($date, 'U');
+            // echo date_timestamp_get($date);
+            // // $url = 'https://wetheforcestudios.com/api/public/carl-donations/mail';
 
-            <div class="card-content card-content-padding">
-              <p class="descripcion">¿Cuánto?</p>
-              <p class="nombre">Tu decides</p>
-              <p class="precio personalizado donacion" data-donacion="">MXN $<span class="custom-price">0</span>.00 <i class="f7-icons" >pencil</i></p>
-            </div>
-          </div>
+            // //The data you want to send via POST
+            // // $fields = [
+            // //     'to' => '',
+            // //     '__EVENTVALIDATION' => $valid,
+            // //     'btnSubmit'         => 'Submit'
+            // // ];
 
+            // //url-ify the data for the POST
+            // $data = '{ "name": "Amigos de la Sierra", "type": "PaymentLink", "recurrent": false, "expired_at": 1593556289, "allowed_payment_methods": [   "cash",   "card" ], "needs_shipping_contact": false, "order_template": {   "line_items": [       {     "name": "Amigos de la Sierra",     "description": "Donación", "unit_price": '.$params['price'].',     "quantity": 1       }   ],   "currency": "MXN",   "customer_info": {       "name": "Donador anónimo",                 "email": "administracion@amigosdelasierra.org",                 "phone": "8446222889"   } }}';
+            $curl = curl_init();
 
+            curl_setopt_array($curl, array(
+              CURLOPT_URL => "https://api.conekta.io/checkouts",
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 0,
+              CURLOPT_FOLLOWLOCATION => true,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => "POST",
+              // CURLOPT_POSTFIELDS => $data,
+              CURLOPT_POSTFIELDS =>"{\n  \"name\": \"Amigos de la Sierra\",\n  \"type\": \"PaymentLink\",\n  \"recurrent\": false,\n  \"expired_at\": ".$date.",\n  \"allowed_payment_methods\": [\n    \"cash\",\n    \"card\"\n  ],\n  \"needs_shipping_contact\": false,\n  \"order_template\": {\n    \"line_items\": [\n        {\n      \"name\": \"Amigos de la Sierra\",\n      \"description\": \"Donación\",\n  \"unit_price\": ".$params["price"].",\n      \"quantity\": 1\n        }\n    ],\n    \"currency\": \"MXN\",\n    \"customer_info\": {\n        \"name\": \"Donador anónimo\",\n                  \"email\": \"administracion@amigosdelasierra.org\",\n                  \"phone\": \"8446222889\"\n    }\n  }\n}",
+              // CURLOPT_POSTFIELDS =>"{\n  \"name\": \"Carl and the plague\",\n  \"type\": \"PaymentLink\",\n  \"recurrent\": false,\n  \"expired_at\": ".$date.",\n  \"allowed_payment_methods\": [\n    \"cash\",\n    \"card\"\n  ],\n  \"needs_shipping_contact\": false,\n  \"order_template\": {\n    \"line_items\": [\n        {\n      \"name\": \"Carl and the plague\",\n      \"description\": \"License\",\n  \"unit_price\": 50000,\n      \"quantity\": 1\n        }\n    ],\n    \"currency\": \"MXN\",\n    \"customer_info\": {\n        \"name\": \"Donador Anónimo\",\n                  \"email\": \"will@wetheforce.com\",\n                  \"phone\": \"8441763270\"\n    }\n  }\n}",
+              CURLOPT_HTTPHEADER => array(
+                "accept: application/vnd.conekta-v2.0.0+json",
+                "access-control-allow-origin: *",
+                "cache-control: no-cache",
+                "Content-Type: application/json",
+                "Authorization: Basic a2V5XzZ2VjJ6Mkh5SjdOS3hNcWU1cmJlcVE6"
+              ),
+            ));
 
+            $respuesta = curl_exec($curl);
+            curl_close($curl);
+            $respuesta = json_decode($respuesta, true);
 
-        </div>
-        
-      </div>
-    </div>
-    <div class="row no-gap">
-      <div class="col-20"></div>
-      <div class="col-60">
-        <a class="button button-raised  button-fill button-large link donar" data-force="true" data-ignore-cache="true" data-view=".view-main" href="">Donar</a>
-        <!-- <a class="button button-raised  button-fill button-large link external donar" data-force="true" data-ignore-cache="true" data-view=".view-main" href="https://pay.conekta.com/link/b4cfa5543f104e3981f36246efea87ce">Donar</a> -->
-
-      </div>
-      
-      <div class="col-20"></div>
-    </div>
-    <div class="footer">
-      <img src="/static/footer.svg" alt="" width="100%" height="auto">
-    </div>
-  </div>
-</div>
-
-</template>
-<script>
-  import $$ from 'dom7';
-export default {
-
- 
-  on: {
-    pageMounted: function(e, page) {
-      // const curl = new (require( 'curl-request' ))();
-      var self = this;
-      var app = self.$app;
-
-  
-      $$('.set-price').on('click', function () {
-        app.dialog.prompt('','Ingresa la cantidad a donar:', function (price) {
-          $$('.set-price .donacion').data('donacion',price);
-          $$('.custom-price').html(price);
-        
-
-        });
-      });
-
-       
-
-      
-
-      $$('a.donar').on('click', function(e){
-        e.preventDefault();
-        app.dialog.preloader('Generando Link de pago...');
-        var cantidadDonada = $$('.swiper-slide-active .donacion').data('donacion');
-        var donacion = cantidadDonada*100;
-        var campanaName = $$('.page').data('campana');
-        var campanaId = $$('.page').data('campanaid');
-        var today = new Date();
-        today.setHours(0,0,0,0);
-        const tomorrow = new Date(today);
-
-        tomorrow.setDate(tomorrow.getDate() + 10);
-        var expiration_date = Math.round(tomorrow.getTime()/1000);
-        app.request.promise.postJSON(app.data.server+'/custom/paymentlink?price='+donacion+'&expiration='+expiration_date,
-        {
-          
-        }
-
-        )
-        .then(function (res) {
-          console.log(res);
-        app.dialog.close();
-          window.open(res.data.paymentLink.url, '_blank');
-        })
-        .catch((error) => {
-          console.error(error);
-          app.dialog.close();
-          app.dialog.alert('Encontramos un error, por favor, vuelva a intentarlo. Gracias', 'Error...');
-        });
-        
-
-      });
-    },
-    pageInit: function(e, page) {
-
-    },
-    pageBeforeIn: function(e, page) {
-      // Get all videos.
-
-    },
-    pageAfterIn: function(e, page) {
-      
-
-    },
-    pageBeforeOut: function(e, page) {
-    },
-    pageAfterOut: function(e, page) {
-    },
-    pageBeforeRemove: function(e, page) {
-    },
-  }
-};
-</script>
+            return $response->withJson([
+                'paymentLink' => $respuesta,
+            ]);
+           
+    }
+    ]
+];

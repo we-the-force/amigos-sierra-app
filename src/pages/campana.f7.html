@@ -18,7 +18,7 @@
   <div class="page-content">
     
     <div class="logo">
-      <img src="/static/logo_white.svg" alt="">
+      <img src="/static/logo-color.svg" alt="">
     </div>
     <div class="title">{{campana.nombre}}</div>
     <div data-pagination='{"el": ".swiper-pagination"}' data-space-between="10" data-slides-per-view="1.5" data-centered-slides="true" class="swiper-container swiper-init ">
@@ -97,6 +97,8 @@ export default {
       // const curl = new (require( 'curl-request' ))();
       var self = this;
       var app = self.$app;
+      var windowReference = window.open();
+
 
   
       $$('.set-price').on('click', function () {
@@ -134,7 +136,14 @@ export default {
         .then(function (res) {
           console.log(res);
         app.dialog.close();
-          window.open(res.data.paymentLink.url, '_blank');
+          // window.open(res.data.paymentLink.url, '_blank');
+          var a = document.createElement('a');
+          // a.target="_blank";
+          a.href=res.data.paymentLink.url;
+          a.click();
+        // windowReference.location= res.data.paymentLink.url;
+
+          
         })
         .catch((error) => {
           console.error(error);
